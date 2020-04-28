@@ -21,7 +21,7 @@ export const normalizePosition = coords => {
     return trace
 }
 
-export const recognize = async ({ coords, width, height }) => {
+export const recognize = async ({ coords, width, height, language = 'en' }) => {
     const params = JSON.stringify({
         options: 'enable_pre_space',
         requests: [
@@ -31,7 +31,7 @@ export const recognize = async ({ coords, width, height }) => {
                     writing_area_height: height,
                 },
                 ink: normalizePosition(coords),
-                language: 'en',
+                language,
             },
         ],
     })

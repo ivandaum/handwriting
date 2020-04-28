@@ -1,19 +1,31 @@
 <template>
     <div class="Index">
-        <WriteArea @stopDrawing="onStopDrawing" :width="width" :height="height" />
+        <!-- <Button :text="prediction" /> -->
+        <WriteTools @onChange="onOptionsUpdate" />
+        <WriteArea
+            :lineWidth="size"
+            :color="color"
+            @stopDrawing="onStopDrawing"
+            :width="width"
+            :height="height"
+        />
     </div>
 </template>
 
 <script>
+import WriteTools from '~/components/WriteTools'
 import WriteArea from '~/components/WriteArea'
 import { recognize } from '~/assets/scripts/GoogleInputTools'
 
 export default {
-    components: { WriteArea },
+    components: { WriteArea, WriteTools },
     data() {
         return {
             width: 0,
             height: 0,
+            prediction: 'Default word',
+            size: 2,
+            color: '#000',
         }
     },
     mounted() {
@@ -24,17 +36,34 @@ export default {
         async onStopDrawing(coords) {
             const width = this.width
             const height = this.height
-            const resp = await recognize({ coords, width, height })
+            const language = navigator.language
+            const resp = await recognize({ coords, width, height, language })
 
             try {
                 const data = JSON.parse(resp.data)
-                const predictions = data[1][0][1]
+                this.prediction = data[1][0][1][0]
             } catch (e) {
                 console.log(e)
+            }
+        },
+
+        onOptionsUpdate(data) {
+            if (data.size) {
+                this.size = parseFloat(data.size)
+            }
+
+            if (data.color) {
+                this.color = data.color
             }
         },
     },
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.Index {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+</style>

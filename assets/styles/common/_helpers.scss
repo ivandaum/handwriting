@@ -1,0 +1,101 @@
+.is-justified {
+    align-items: space-between;
+    justify-content: space-between;
+}
+
+.is-center {
+    align-items: center;
+    justify-content: center;
+
+    &-y {
+        align-items: center;
+    }
+}
+
+.is-baseline {
+    align-items: baseline;
+}
+
+.no-shrink {
+    flex-shrink: 0;
+}
+.is-inline {
+    display: inline;
+}
+
+.is-relative {
+    position: relative;
+}
+
+.is-absolute {
+    position: absolute;
+}
+
+.is-inline-flex {
+    display: inline-flex;
+}
+
+.is-inline-block {
+    display: inline-block;
+}
+
+.is-fixed {
+    position: fixed;
+}
+
+.is-flex {
+    display: flex;
+
+    &.is-column {
+        flex-direction: column;
+    }
+
+    &-desktop {
+        @include desktop {
+            display: flex;
+        }
+    }
+}
+
+.is-sticky {
+    position: sticky;
+    top: 0;
+}
+
+.is-block {
+    display: block;
+}
+
+.is-hidden-desktop {
+    @include desktop {
+        display: none !important;
+    }
+}
+.is-hidden-touch {
+    @include touch {
+        display: none !important;
+    }
+}
+
+.is-capitalize::first-letter {
+    text-transform: capitalize;
+}
+
+.br-desktop {
+    @include desktop {
+        display: block;
+    }
+}
+
+.button {
+    background: var(--color-black);
+    color: var(--color-white);
+    border: none;
+    font-size: 1em;
+    padding: 0.4em 0.75em;
+    font-weight: 600;
+}
+
+.is-activable {
+    cursor: pointer;
+}

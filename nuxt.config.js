@@ -27,7 +27,7 @@ export default {
     /*
      ** Plugins to load before mounting the App
      */
-    plugins: [],
+    plugins: [{ src: '~/plugins/raf-manager.js', mode: 'client' }],
     /*
      ** Nuxt.js dev-modules
      */
@@ -38,7 +38,18 @@ export default {
     modules: [
         // Doc: https://axios.nuxtjs.org/usage
         '@nuxtjs/axios',
+        'nuxt-i18n',
     ],
+    i18n: {
+        locales: [
+            // { name: 'Français', code: 'fr', iso: 'fr', file: 'fr-FR.json' },
+            { name: 'English', code: 'en', iso: 'en', file: 'en-US.json' },
+        ],
+        langDir: 'locales/',
+        lazy: true,
+        defaultLocale: 'en',
+        baseUrl: process.env.BASE_URL,
+    },
     /*
      ** Axios module configuration
      ** See https://axios.nuxtjs.org/options
