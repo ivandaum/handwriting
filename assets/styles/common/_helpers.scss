@@ -1,6 +1,10 @@
 .is-justified {
     align-items: space-between;
     justify-content: space-between;
+
+    &-x {
+        justify-content: space-between;
+    }
 }
 
 .is-center {

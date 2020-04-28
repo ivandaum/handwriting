@@ -1,8 +1,9 @@
 <template>
     <div class="Index">
         <!-- <Button :text="prediction" /> -->
-        <WriteTools @onChange="onOptionsUpdate" />
+        <WriteTools :color="color" :size="size" @onChange="onOptionsUpdate" />
         <WriteArea
+            ref="WriteArea"
             :lineWidth="size"
             :color="color"
             @stopDrawing="onStopDrawing"
@@ -24,7 +25,7 @@ export default {
             width: 0,
             height: 0,
             prediction: 'Default word',
-            size: 2,
+            size: 5,
             color: '#000',
         }
     },
@@ -54,6 +55,10 @@ export default {
 
             if (data.color) {
                 this.color = data.color
+            }
+
+            if (data.erase) {
+                this.$refs.WriteArea.clear()
             }
         },
     },

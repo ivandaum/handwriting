@@ -133,6 +133,25 @@ html {
     font-size: 10px;
 }
 
+button {
+    -webkit-appearance: none;
+    border: none;
+    font-size: inherit;
+    background: inherit;
+    font-weight: inherit;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    padding: 0.2em 0.6em;
+
+    &.active {
+        background: var(--color-grey);
+    }
+
+    &:active {
+        background: var(--color-grey);
+    }
+}
+
 body {
     font-family: 'Roboto Mono', monospace, 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
         'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;

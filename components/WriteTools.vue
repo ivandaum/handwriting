@@ -1,35 +1,41 @@
 <template>
-    <div class="WriteTools is-flex">
-        <div class="WriteTools__tool is-baseline is-flex">
-            <p class="is-block">Pencil size</p>
-            <input
-                ref="size"
-                @input="$emit('onChange', { size: $refs.size.value })"
-                value="2"
-                name="size"
-                step="0.01"
-                type="range"
-                min="1"
-                max="10"
-            />
+    <div class="WriteTools is-flex is-justified-x">
+        <div class="WriteTools__tool is-flex is-center">
+            <button @click="$emit('onChange', { erase: true })" class="button">↻ Erase</button>
         </div>
-        <div class="WriteTools__tool is-baseline is-flex">
-            <Color v-show="colorPickerOpen" @change="updateColor" @click="colorPickerOpen = true" />
-            <p
-                @click="colorPickerOpen = !colorPickerOpen"
-                :class="{ active: colorPickerOpen }"
-                class="is-flex is-center is-activable is-baseline"
-            >
-                Color
-                <span
-                    :style="{ backgroundColor: color }"
-                    class="WriteTools__colorViewer is-block"
+        <div class="is-flex">
+            <div class="WriteTools__tool is-center is-flex">
+                <p class="is-block">Size</p>
+                <input
+                    ref="size"
+                    @input="$emit('onChange', { size: $refs.size.value })"
+                    :value="size"
+                    name="size"
+                    step="0.01"
+                    type="range"
+                    min="1"
+                    max="20"
                 />
-            </p>
+            </div>
+            <div class="WriteTools__tool is-center is-flex">
+                <Color
+                    v-show="colorPickerOpen"
+                    @change="updateColor"
+                    @click="colorPickerOpen = true"
+                />
+                <button
+                    @click="colorPickerOpen = !colorPickerOpen"
+                    :class="{ active: colorPickerOpen }"
+                    class="is-flex is-center is-activable is-baseline"
+                >
+                    Color
+                    <span
+                        :style="{ backgroundColor: color }"
+                        class="WriteTools__colorViewer is-block"
+                    />
+                </button>
+            </div>
         </div>
-        <!-- <div class="WriteTools__tool is-flex is-center">
-            <button class="button">Clear text</button>
-        </div> -->
     </div>
 </template>
 <script>
@@ -40,14 +46,27 @@ export default {
     components: {
         Color,
     },
+    props: {
+        size: {
+            type: Number,
+            default: 5,
+        },
+        color: {
+            type: String,
+            default: '#000000',
+        },
+    },
     data() {
         return {
-            color: '#000000',
             colorPickerOpen: false,
         }
     },
     mounted() {
-        // window.addEventListener('click', () => (this.colorPickerOpen = false))
+        window.addEventListener('click', e => {
+            if (e.target.classList.contains('WriteArea')) {
+                this.colorPickerOpen = false
+            }
+        })
     },
     methods: {
         updateColor(color) {
@@ -81,21 +100,17 @@ export default {
     position: fixed;
     bottom: 5rem;
     right: 5rem;
+    left: 5rem;
     z-index: 20;
 
     &__tool {
-        margin-left: 2.5em;
+        margin-left: 1.5em;
     }
 
-    p {
+    p,
+    button {
         line-height: 1.5em;
         font-size: 1.6rem;
-        padding: 0 0.4em;
-
-        &.active {
-            background: var(--color-grey);
-            border-radius: 0.3rem;
-        }
     }
 
     &__colorViewer {
@@ -112,10 +127,11 @@ export default {
     }
 
     input[type='range'] {
-        transform: translateY(-0.4rem);
+        transform: translateY(0.2rem);
         background: var(--color-black);
         -webkit-appearance: none !important;
         height: 0.2rem;
+        margin-left: 1rem;
 
         &::-webkit-slider-thumb {
             @include thumb;
@@ -128,11 +144,6 @@ export default {
         &::-moz-range-thumb {
             @include thumb;
         }
-    }
-
-    input[type='text'] {
-        width: 5rem;
-        border: none;
     }
 }
 </style>

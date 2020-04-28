@@ -19,7 +19,7 @@ export default {
     props: {
         lineWidth: {
             type: Number,
-            default: 2,
+            default: 5,
         },
         color: {
             type: String,
@@ -51,6 +51,8 @@ export default {
         this.ctx = this.$el.getContext('2d')
         this.ctx.lineJoin = 'round'
         this.ctx.lineCap = 'round'
+        this.ctx.lineWidth = this.lineWidth
+        this.ctx.strokeStyle = this.color
 
         this.RafManager.addQueue(this.draw.bind(this))
     },
@@ -86,10 +88,15 @@ export default {
             return this.mouse
         },
 
+        clear() {
+            this.coords = []
+            this.ctx.clearRect(0, 0, this.width, this.height)
+        },
+
         draw() {
             const ctx = this.ctx
             const length = this.coords.length
-            this.ctx.clearRect(0, 0, this.width, this.height)
+            ctx.clearRect(0, 0, this.width, this.height)
 
             if (!length) {
                 return false
