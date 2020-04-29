@@ -25,7 +25,7 @@ export default {
             width: 0,
             height: 0,
             prediction: 'Default word',
-            size: 5,
+            size: 10,
             color: '#000',
         }
     },
@@ -43,6 +43,8 @@ export default {
             try {
                 const data = JSON.parse(resp.data)
                 this.prediction = data[1][0][1][0]
+
+                console.log(this.prediction)
             } catch (e) {
                 console.log(e)
             }
@@ -59,6 +61,10 @@ export default {
 
             if (data.erase) {
                 this.$refs.WriteArea.clear()
+            }
+
+            if (data.ctrlZ) {
+                this.$refs.WriteArea.removeLastCurve()
             }
         },
     },

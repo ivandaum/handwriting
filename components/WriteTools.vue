@@ -1,7 +1,14 @@
 <template>
     <div class="WriteTools is-flex is-justified-x">
-        <div class="WriteTools__tool is-flex is-center">
-            <button @click="$emit('onChange', { erase: true })" class="button">↻ Erase</button>
+        <div class="is-flex">
+            <div class="WriteTools__tool is-flex is-center">
+                <button @click="$emit('onChange', { erase: true })" class="button">Erase</button>
+            </div>
+            <div class="WriteTools__tool is-flex is-center">
+                <button @click="$emit('onChange', { ctrlZ: true })" class="button">
+                    ↺
+                </button>
+            </div>
         </div>
         <div class="is-flex">
             <div class="WriteTools__tool is-center is-flex">
@@ -11,10 +18,10 @@
                     @input="$emit('onChange', { size: $refs.size.value })"
                     :value="size"
                     name="size"
-                    step="0.01"
+                    step="0.1"
                     type="range"
                     min="1"
-                    max="20"
+                    max="50"
                 />
             </div>
             <div class="WriteTools__tool is-center is-flex">
@@ -30,7 +37,7 @@
                 >
                     Color
                     <span
-                        :style="{ backgroundColor: color }"
+                        :style="{ backgroundColor: currentColor }"
                         class="WriteTools__colorViewer is-block"
                     />
                 </button>
@@ -58,10 +65,12 @@ export default {
     },
     data() {
         return {
+            currentColor: null,
             colorPickerOpen: false,
         }
     },
     mounted() {
+        this.currentColor = this.color
         window.addEventListener('click', e => {
             if (e.target.classList.contains('WriteArea')) {
                 this.colorPickerOpen = false
@@ -70,7 +79,7 @@ export default {
     },
     methods: {
         updateColor(color) {
-            this.color = color
+            this.currentColor = color
             this.$emit('onChange', { color })
         },
     },
