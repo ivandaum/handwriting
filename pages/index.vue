@@ -1,5 +1,5 @@
 <template>
-    <div class="Index">
+    <div @resize="onResize" class="Index">
         <!-- <Button :text="prediction" /> -->
         <WriteTools :color="color" :size="size" @onChange="onOptionsUpdate" />
         <WriteArea
@@ -24,16 +24,21 @@ export default {
         return {
             width: 0,
             height: 0,
-            prediction: 'Default word',
+            prediction: '',
             size: 10,
             color: '#000',
         }
     },
     mounted() {
-        this.width = window.innerWidth
-        this.height = window.innerHeight
+        this.onResize()
+        window.addEventListener('resize', this.onResize.bind(this))
     },
     methods: {
+        onResize() {
+            this.width = window.innerWidth
+            this.height = window.innerHeight
+        },
+
         async onStopDrawing(coords) {
             const width = this.width
             const height = this.height
